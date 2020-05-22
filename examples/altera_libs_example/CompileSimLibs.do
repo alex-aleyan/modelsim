@@ -35,8 +35,22 @@ set vhdFileName_vhdLibName {
   altera_mf.vhd
   altera_lnsim_components.vhd
   alt_dspbuilder_package.vhd
-  altera_europa_support_lib.vhd}
+  altera_europa_support_lib.vhd }
   
+
+set cycloneive_vhdFileName_libName {
+  cycloneive_atoms.vhd
+  cycloneive_components.vhd        }
+
+
+
+set cycloneV_vhdFileName_libName {
+  cyclonev_atoms.vhd
+  cyclonev_components.vhd
+  cyclonev_hssi_components.vhd
+  cyclonev_hssi_atoms.vhd}
+
+
 proc pause {{message "Hit Enter to continue..."}} {
     puts -nonewline $message
     flush stdout
@@ -156,6 +170,23 @@ if {$argc > 0} {
   if { $1 == "altera_vhd" } { 
     compile_vhdl_lib $vhd_lib_path $quartus_sim_lib $vhdFileName_vhdLibName 
   } 
+}
+
+
+# CYCLONE-IVe Libraries:
+if {$argc > 0} {
+  if { $1 == "cycloneive" } {
+    compile_vhdl_lib $vhd_lib_path $quartus_sim_lib $cycloneive_vhdFileName_libName
+  }
+}
+
+# pause
+
+# CYCLONE-V Libraries:
+if {$argc > 0} {
+  if { $1 == "cyclonev" } {
+    compile_vhdl_lib $vhd_lib_path $quartus_sim_lib $cycloneV_vhdFileName_libName
+  }
 }
 
 
