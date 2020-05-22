@@ -19,7 +19,7 @@ does_dir_exist $quartus_sim_lib
 cp $MODELSIM ./
 
 does_file_exist ./modelsim.ini
-if [ $? -ne 0 ]; then exit; fi
+#if [ $? -ne 0 ]; then exit; fi
 
 echo -e "Launching modelsim now!"
 
