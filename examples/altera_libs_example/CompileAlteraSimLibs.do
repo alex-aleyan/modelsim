@@ -80,7 +80,10 @@ proc clean_lib {lib_path} {
 
 
 
-proc compile_vhdl_lib {sim_path_to_vhd_lib quartus_path_to_vhd_files libName_quartusFile} {
+proc compile_vhdl_lib {sim_path_to_vhd_lib 
+                       quartus_path_to_vhd_files 
+                       libName_quartusFile} {
+
   set path_to_vhd_lib $sim_path_to_vhd_lib
   set path_to_vhd_files $quartus_path_to_vhd_files
 
@@ -97,7 +100,10 @@ proc compile_vhdl_lib {sim_path_to_vhd_lib quartus_path_to_vhd_files libName_qua
 }
 
 
-proc compile_vrl_lib {sim_path_to_vrl_lib quartus_path_to_vrl_files libName_quartusFile} {
+proc compile_vrl_lib { sim_path_to_vrl_lib 
+                       quartus_path_to_vrl_files 
+                       libName_quartusFile} {
+
   set path_to_vrl_lib $sim_path_to_vrl_lib
   set path_to_vrl_files $quartus_path_to_vrl_files
 
@@ -114,7 +120,10 @@ proc compile_vrl_lib {sim_path_to_vrl_lib quartus_path_to_vrl_files libName_quar
 }
 
 
-proc test_proc {sim_path_to_vrl_lib quartus_path_to_vrl_files libName_quartusFile} {
+proc test_proc { sim_path_to_vrl_lib 
+                 quartus_path_to_vrl_files 
+                 libName_quartusFile} {
+
   set path_to_vrl_lib $sim_path_to_vrl_lib
   set path_to_vrl_files $quartus_path_to_vrl_files
 
