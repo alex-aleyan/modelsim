@@ -36,19 +36,25 @@ set vhdFileName_vhdLibName {
   altera_lnsim_components.vhd
   alt_dspbuilder_package.vhd
   altera_europa_support_lib.vhd }
-  
 
 set cycloneive_vhdFileName_libName {
   cycloneive_atoms.vhd
   cycloneive_components.vhd        }
-
-
 
 set cycloneV_vhdFileName_libName {
   cyclonev_atoms.vhd
   cyclonev_components.vhd
   cyclonev_hssi_components.vhd
   cyclonev_hssi_atoms.vhd}
+
+
+set verFileName_libName {
+    altera_primitives.v
+    220model.v
+    sgate.v
+    altera_mf.v
+    altera_lnsim.sv
+    mentor/altera_lnsim_for_vhdl.sv }
 
 
 proc pause {{message "Hit Enter to continue..."}} {
@@ -65,37 +71,17 @@ proc clean_lib {lib_path} {
     puts "Checking if $lib_path is missing; make $lib_path if missing."
     if { [file exists "$lib_path"] == 0 } { 
       puts "$lib_path is missing; making $lib_path directory..."
-      file mkdir $lib_path } }
+      file mkdir $lib_path } 
+}
 
 
 
-# proc compile_vhdl_lib {destination_library_path 
-#                        path_to_vhd_source_file_dir 
-#                        vhd_source_file} {
-# 
-#   set path_to_vhd_lib $destination_library_path
-#   set path_to_vhd_files $path_to_vhd_source_file_dir
-# 
-#   foreach elem $vhd_source_file {
-#     #puts "$elem" 
-# 	set vhd_altera_basic_lib [lindex $elem 0]
-# 	set vhd_lib_name [lindex $elem 1]
-#     puts "+++++++++++++ Starting to compile $vhd_altera_basic_lib to $vhd_lib_name +++++++++++++"
-# 	vlib $path_to_vhd_lib/$vhd_lib_name
-#     vmap $vhd_lib_name $path_to_vhd_lib/$vhd_lib_name
-#     vcom -work $path_to_vhd_lib/$vhd_lib_name -2002 $path_to_vhd_files/$vhd_altera_basic_lib
-#     puts "xxxxxxxxxxxxx Done compiling $vhd_altera_basic_lib to $vhd_lib_name xxxxxxxxxxxxx" 
-#   } 
-# }
-
-proc compile_vhdl_lib {destination_library_path 
-                       path_to_vhd_source_file_dir 
-                       vhd_source_file} {
-
-  #set path_to_vhd_lib $destination_library_path
-  #set path_to_vhd_files $path_to_vhd_source_file_dir
+proc compile_vhdl_lib { destination_library_path 
+                        path_to_vhd_source_file_dir 
+                        vhd_source_file             } {
 
   foreach source_file $vhd_source_file {
+    puts "+++++++++++++ Starting to compile $source_file to $source_file +++++++++++++"
     #strip of the PATH and EXTENSION from <PATH>/source_file_name/<EXTENSION> 
     set destination_lib_name [file rootname [file tail $source_file]]
     puts ""
@@ -103,7 +89,6 @@ proc compile_vhdl_lib {destination_library_path
     puts "destination_library_path: $destination_library_path" 
     puts "path_to_vhd_source_file_dir: $path_to_vhd_source_file_dir" 
     puts "destination_lib_name $destination_lib_name"
-    puts "+++++++++++++ Starting to compile $source_file to $source_file +++++++++++++"
     vlib $destination_library_path/$destination_lib_name
     vmap $destination_lib_name $destination_library_path/$destination_lib_name
     vcom -work $destination_library_path/$destination_lib_name -2008 $path_to_vhd_source_file_dir/$source_file
@@ -111,22 +96,24 @@ proc compile_vhdl_lib {destination_library_path
   } 
 }
 
-proc compile_vrl_lib { sim_path_to_vrl_lib 
-                       quartus_path_to_vrl_files 
-                       vhd_source_file} {
+proc compile_vrl_lib { destination_library_path
+                       path_to_vhd_source_file_dir 
+                       vhd_source_file             } {
 
-  set path_to_vrl_lib $sim_path_to_vrl_lib
-  set path_to_vrl_files $quartus_path_to_vrl_files
-
-  foreach elem $vhd_source_file {
-    #puts "$elem" 
-	set vrl_altera_basic_lib [lindex $elem 0]
-	set vrl_lib_name [lindex $elem 1]
-    puts "+++++++++++++ Starting to compile $vrl_altera_basic_lib to $vrl_lib_name +++++++++++++"
-	vlib $path_to_vrl_lib/$vrl_lib_name
-    vmap $vrl_lib_name $path_to_vrl_lib/$vrl_lib_name
-    vlog -work $path_to_vrl_lib/$vrl_lib_name ${path_to_vrl_files}/$vrl_altera_basic_lib
-    puts "xxxxxxxxxxxxx Done compiling $vrl_altera_basic_lib to $vrl_lib_name xxxxxxxxxxxxx" 
+  foreach source_file $vhd_source_file {
+    puts "+++++++++++++ Starting to compile $source_file to $source_file +++++++++++++"
+    #strip of the PATH and EXTENSION from <PATH>/source_file_name/<EXTENSION> 
+    set destination_lib_name [file rootname [file tail $source_file]]
+    puts ""
+    puts "source_file: $source_file" 
+    puts "destination_library_path: $destination_library_path" 
+    puts "path_to_vhd_source_file_dir: $path_to_vhd_source_file_dir" 
+    puts "destination_lib_name $destination_lib_name"
+    vlib $destination_library_path/$destination_lib_name
+    vmap $destination_lib_name $destination_library_path/$destination_lib_name
+    #vlog -work $path_to_vrl_lib/$vrl_lib_name ${path_to_vrl_files}/$vrl_altera_basic_lib
+    vlog -work $destination_library_path/$destination_lib_name $path_to_vhd_source_file_dir/$source_file
+    puts "xxxxxxxxxxxxx Done compiling $source_file to $source_file xxxxxxxxxxxxx" 
   } 
 }
 
@@ -189,6 +176,13 @@ if {$argc > 0} {
   }
 }
 
+# ALTERA Verilog Libraries:
+if {$argc > 0} {
+  if { $1 == "altera_vrl" } {
+        puts "verilog"
+    compile_vrl_lib $vrl_lib_path $quartus_sim_lib $verFileName_libName
+  }
+}
 
 
 if {$argc > 0} {
