@@ -96,17 +96,16 @@ proc compile_vhdl_lib {destination_library_path
   #set path_to_vhd_files $path_to_vhd_source_file_dir
 
   foreach source_file $vhd_source_file {
+    puts ""
     puts "source_file: $source_file" 
     puts "destination_library_path: $destination_library_path" 
     puts "path_to_vhd_source_file_dir: $path_to_vhd_source_file_dir" 
-    puts ""
-
-#	set vhd_altera_basic_lib [lindex $source_file 0]
-#	set vhd_lib_name [lindex $source_file 1]
+    set source_file_basename [file rootname [file tail $source_file]]
+    puts "source_file_basename $source_file_basename"
     puts "+++++++++++++ Starting to compile $source_file to $source_file +++++++++++++"
-    vlib $destination_library_path/$source_file
-    vmap $source_file $destination_library_path/$source_file
-    vcom -work $destination_library_path/$source_file -2002 $path_to_vhd_source_file_dir/$source_file
+    vlib $destination_library_path/$source_file_basename
+    vmap $source_file_basename $destination_library_path/$source_file_basename
+    vcom -work $destination_library_path/$source_file_basename -2008 $path_to_vhd_source_file_dir/$source_file
     puts "xxxxxxxxxxxxx Done compiling $source_file to $source_file xxxxxxxxxxxxx" 
   } 
 }

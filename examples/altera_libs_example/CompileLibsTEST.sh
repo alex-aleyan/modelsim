@@ -35,8 +35,8 @@ echo -e "Launching modelsim now!"
 
 #vsim -c -do "set quartus_sim_lib $quartus_sim_lib; set libs $libs; set vrl_lib_path $vrl_lib_path; set vhd_lib_path $vhd_lib_path; do CompileSimLibs.do clean"
 vsim -c -do "set quartus_sim_lib $quartus_sim_lib; set libs $libs; set vrl_lib_path $vrl_lib_path; set vhd_lib_path $vhd_lib_path; do CompileSimLibs.do altera_vhd"
-vsim -c -do "set quartus_sim_lib $quartus_sim_lib; set libs $libs; set vrl_lib_path $vrl_lib_path; set vhd_lib_path $vhd_lib_path; do CompileAlteraSimLibs.do cycloneive"
-vsim -c -do "set quartus_sim_lib $quartus_sim_lib; set libs $libs; set vrl_lib_path $vrl_lib_path; set vhd_lib_path $vhd_lib_path; do CompileAlteraSimLibs.do cyclonev"
+vsim -c -do "set quartus_sim_lib $quartus_sim_lib; set libs $libs; set vrl_lib_path $vrl_lib_path; set vhd_lib_path $vhd_lib_path; do CompileSimLibs.do cycloneive"
+vsim -c -do "set quartus_sim_lib $quartus_sim_lib; set libs $libs; set vrl_lib_path $vrl_lib_path; set vhd_lib_path $vhd_lib_path; do CompileSimLibs.do cyclonev"
 
 
 exit 0
