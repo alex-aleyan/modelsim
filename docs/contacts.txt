@@ -1,0 +1,11 @@
+Mentor’s support site: https://support.sw.siemens.com/register (Mentor is now owned by Siemens). 
+
+Once you’ve successfully registered and entered our site ID (I use 15130, but LM Owego has 5 site IDs for some reason), you can download any available version of Questa or Questa Formal (the tool suite containing AutoCheck).
+
+If you have any issues, Rick White (email: Rick_White@mentor.com, phone: 407-999-2317) is our FAE for Mentor and can help you out.
+
+Owego site ID is 15130 and 
+the WAC is 1+57+13107.
+
+
+514386 ns
