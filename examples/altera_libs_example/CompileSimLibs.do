@@ -76,6 +76,25 @@ proc clean_lib {lib_path} {
 
 
 
+# VHDL FUNCTIONS:
+
+proc compile_vhdl_file { destination_library_dir 
+                         vhd_source_file             } {
+
+    puts ""
+    puts "+++++++++++++ Starting to compile $vhd_source_file to $destination_library_dir +++++++++++++"
+    #strip of the PATH and EXTENSION from <PATH>/vhd_source_file_name/<EXTENSION> 
+    set destination_lib_name [file rootname [file tail $destination_library_dir]]
+    puts "vhd_source_file: $vhd_source_file" 
+    puts "destination_library_dir: $destination_library_dir" 
+    vlib $destination_library_dir
+    vmap $destination_lib_name $destination_library_dir
+    vcom -work $destination_library_dir -2008 $vhd_source_file
+    puts "------------- Done compiling $vhd_source_file to $destination_library_dir -------------" 
+
+}
+
+
 proc compile_vhdl_lib { destination_library_path 
                         path_to_vhd_source_file_dir 
                         vhd_source_file             } {
@@ -94,6 +113,24 @@ proc compile_vhdl_lib { destination_library_path
     vcom -work $destination_library_path/$destination_lib_name -2008 $path_to_vhd_source_file_dir/$source_file
     puts "xxxxxxxxxxxxx Done compiling $source_file to $source_file xxxxxxxxxxxxx" 
   } 
+}
+
+
+# VERILOG FUNCTIONS:
+proc compile_vrl_file { destination_library_dir 
+                        vrl_source_file             } {
+
+    puts ""
+    puts "+++++++++++++ Starting to compile $vrl_source_file to $destination_library_dir +++++++++++++"
+    #strip of the PATH and EXTENSION from <PATH>/vrl_source_file_name/<EXTENSION> 
+    set destination_lib_name [file rootname [file tail $destination_library_dir]]
+    puts "vrl_source_file: $vrl_source_file" 
+    puts "destination_library_dir: $destination_library_dir" 
+    vlib $destination_library_dir
+    vmap $destination_lib_name $destination_library_dir
+    vlog -work $destination_library_dir $vrl_source_file
+    puts "------------- Done compiling $vrl_source_file to $destination_library_dir -------------" 
+
 }
 
 proc compile_vrl_lib { destination_library_path
@@ -184,11 +221,22 @@ if {$argc > 0} {
   }
 }
 
+if {$argc > 0} {
+    if { $1 == "vhd_file" } {
+        compile_vhdl_file $destination_lib_path $vhdl_source_file
+    } 
+}
 
 if {$argc > 0} {
-  if { $1 == "test" } {
-    test_proc $vrl_lib_path $quartus_sim_lib $verFileName_libName 
-  } 
+    if { $1 == "vrl_file" } {
+        compile_vrl_file $destination_lib_path $vrl_source_file
+    } 
+}
+
+if {$argc > 0} {
+    if { $1 == "test" } {
+        #compile_vhdl_file $destination_lib_path $vhdl_source_file
+    } 
 }
 	
 # pause

@@ -1,1 +1,3 @@
-rm -rf modelsim.ini libs transcript 
+CompileSimLibs_testbench.sh
+CompileSimLibs.do
+
